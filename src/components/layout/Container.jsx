@@ -1,11 +1,11 @@
-import FeedbackList from "../feedback/FeedbackList";
+import BookList from "../Book/BookList";
 import Header from "./Header";
 
 export default function Container() {
   return (
     <div className="container">
       <Header />
-      <FeedbackList />
+      <BookList />
     </div>
   );
 }

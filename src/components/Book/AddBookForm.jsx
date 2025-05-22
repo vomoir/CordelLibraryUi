@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MAX_CHARACTERS } from "../../lib/constants";
 
-export default function FeedbackForm({ onAddToList }) {
+export default function AddBookForm({ onAddToList }) {
   const [text, setText] = useState("");
   const [showValidIndicator, setShowValidIndicator] = useState(false);
   const [showInvalidIndicator, setShowInvalidIndicator] = useState(false);

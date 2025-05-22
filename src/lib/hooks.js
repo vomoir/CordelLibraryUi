@@ -4,15 +4,13 @@ import { BooksContext } from "../components/contexts/BooksContextProvider";
 export function useBooksContext() {
   const context = useContext(BooksContext);
   if (!context) {
-    throw new Error(
-      "FeedbackItemsCOntext is not defined in FeedbackList component"
-    );
+    throw new Error("BooksContext is not defined in BookList component");
   }
   return context;
 }
 
 export function useBooks() {
-  const [books, setBooks] = useState < [] > [];
+  const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const uri = "https://localhost:7179/api/Books";
@@ -29,7 +27,8 @@ export function useBooks() {
         }
 
         const data = await response.json();
-        setBooks(data.feedbacks);
+        console.debug(data);
+        setBooks(data.books);
       } catch (error) {
         setErrorMessage("Something went wrong. Try later...");
       }

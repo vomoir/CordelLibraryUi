@@ -4,18 +4,19 @@ import { useBooks } from "../../lib/hooks";
 export const BooksContext = createContext(null);
 
 export default function BooksContextProvider({ children }) {
-  const { books, isLoading, errorMessage, setbooks } = useBooks();
+  const { books, isLoading, errorMessage } = useBooks();
   const [selectedTitle, setSelectedTitle] = useState("");
 
   const bookList = useMemo(
     () =>
       books
-        .map((item) => item.title)
+        .map((book) => book.title)
         .filter((title, index, array) => {
           return array.indexOf(title) === index;
         }),
     [books]
   );
+
   const filteredbooks = useMemo(
     () =>
       selectedTitle
@@ -25,11 +26,15 @@ export default function BooksContextProvider({ children }) {
   );
 
   const handleAddToList = async (text) => {
-    const companyName = text
-      .split(" ")
-      .find((word) => word.includes("#"))!
-      .substring(1);
-
+    if (!text) {
+      return;
+    }
+    const existingBook = books.find((book) => book.title === text);
+    if (existingBook) {
+      alert("Book already exists in the list.");
+      return;
+    }
+    // Create a new book object with default values
     const newItem = {
       Id: 0,
       Title: text,
@@ -43,17 +48,14 @@ export default function BooksContextProvider({ children }) {
 
     setbooks([...books, newItem]);
 
-    await fetch(
-      "https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks",
-      {
-        method: "POST",
-        body: JSON.stringify(newItem),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    await fetch("https://localhost:7179/api/Books", {
+      method: "POST",
+      body: JSON.stringify(newItem),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
   };
   const handleSelectBook = (title) => {
     setSelectedTitle(title);

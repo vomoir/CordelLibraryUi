@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TriangleUpIcon } from "@radix-ui/react-icons";
 
-export default function FeedbackItem({ feedbackItem }) {
+export default function Book({ book }) {
   const [open, setOpen] = useState(false);
   const [upvoteCount, setUpvoteCount] = useState(feedbackItem.upvoteCount);
 

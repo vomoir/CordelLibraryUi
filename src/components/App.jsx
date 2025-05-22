@@ -1,19 +1,22 @@
 import Container from "./layout/Container";
+import BooksContextProvider from "./contexts/BooksContextProvider";
 import Footer from "./layout/Footer";
-import HashtagList from "./hashtag/HashtagList";
 // import { useFeedbackItemsStore } from "../stores/feedbackItemsStore";
 import { useEffect } from "react";
 import GetBooks from "../api/getBooks";
+import { useBooks } from "../lib/hooks";
 
 function App() {
-  const books = GetBooks();
+  const books = useBooks();
+
   console.log(books);
 
   return (
     <div className="app">
       <Footer />
-      <Container />
-      {/* <HashtagList /> */}
+      <BooksContextProvider>
+        <Container />
+      </BooksContextProvider>
     </div>
   );
 }
